@@ -1,8 +1,9 @@
 import { GalleryShowcaseSection } from "@/components/GalleryShowcaseSection";
 import { HomeHeroSection } from "@/components/HomeHeroSection";
 import { HowItWorksSection } from "@/components/HowItWorksSection";
-import { TestimonialsSection } from "@/components/TestimonialsSection";
+import { TestimonialsSection } from "@/components/Testimonials";
 import { PricingSection } from "@/components/PricingSection";
+import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -10,8 +11,9 @@ export default function Home() {
       <HomeHeroSection />
       <GalleryShowcaseSection />
       <HowItWorksSection />
-      <TestimonialsSection />
       <PricingSection />
+      <TestimonialsSection />
+      <Footer />
     </main>
   );
 }
