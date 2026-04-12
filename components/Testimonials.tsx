@@ -5,7 +5,7 @@ import { TestimonialsColumn } from "./TestimonialsColumns";
 
 const [firstColumn, secondColumn, thirdColumn] = TESTIMONIAL_COLUMNS;
 
-export function TestimonialsSection() {
+export function Testimonials() {
   return (
     <section className="bg-background py-24 relative overflow-hidden">
       <div className="container z-10 mx-auto px-4">
