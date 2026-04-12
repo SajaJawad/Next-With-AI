@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function StudioPage() {
   return (
-    <div className="min-h-screen bg-neutral-950 text-white p-8 font-[family-name:var(--font-geist-sans)]">
+    <div className="min-h-screen bg-neutral-950 text-white p-8 font-(family-name:--font-geist-sans)">
       <div className="max-w-6xl mx-auto space-y-12">
         {/* Header Section */}
         <header className="space-y-4">
@@ -13,7 +13,7 @@ export default function StudioPage() {
             </span>
             Secure Access Granted
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-white via-neutral-400 to-neutral-600 bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-linear-to-r from-white via-neutral-400 to-neutral-600 bg-clip-text text-transparent">
             Creator Studio
           </h1>
           <p className="text-neutral-400 text-lg max-w-2xl leading-relaxed">
@@ -42,7 +42,7 @@ export default function StudioPage() {
         <main className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
             <div className="h-96 rounded-3xl bg-neutral-900/30 border border-neutral-800 flex items-center justify-center group overflow-hidden relative">
-              <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/5 via-transparent to-transparent"></div>
+              <div className="absolute inset-0 bg-linear-to-tr from-emerald-500/5 via-transparent to-transparent"></div>
               <div className="text-center space-y-4 relative z-10">
                 <div className="w-16 h-16 rounded-2xl bg-neutral-800 flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500">
                   <svg className="w-8 h-8 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
