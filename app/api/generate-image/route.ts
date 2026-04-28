@@ -172,7 +172,6 @@ export async function POST(request: Request) {
                 {
                   type: "image",
                   image: imageBuffer,
-                  mimeType: sourceMimeType,
                 },
               ],
             },
