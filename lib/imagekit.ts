@@ -1,13 +1,11 @@
-import { ImageKit, toFile } from "@imagekit/nodejs";
+import ImageKit, { toFile } from "@imagekit/nodejs";
 
-let _client: InstanceType<typeof ImageKit> | null = null;
+let _client: ImageKit | null = null;
 
 function getClient() {
   if (!_client) {
     _client = new ImageKit({
-      publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!,
       privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
-      urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!,
     });
   }
   return _client;
