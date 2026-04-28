@@ -189,7 +189,6 @@ function useStudioWorkbenchValue({
           token: authParams.token,
           expire: authParams.expire,
           publicKey: authParams.publicKey,
-          urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT,
         });
 
         if (!uploadResult.url) {
