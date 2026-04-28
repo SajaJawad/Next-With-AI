@@ -70,6 +70,7 @@ export function StylePresetCard({
           src={thumbnailPath}
           alt={thumbnailAlt}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
         />
 
@@ -138,13 +139,20 @@ export function ResultPreviewFrame({
         alt="Generated styled result"
         fill
         unoptimized
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         className="object-cover"
       />
     );
   }
 
   return (
-    <Image src={fallbackSrc} alt={fallbackAlt} fill className="object-cover" />
+    <Image
+      src={fallbackSrc}
+      alt={fallbackAlt}
+      fill
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+      className="object-cover"
+    />
   );
 }
 
@@ -163,6 +171,7 @@ export function HistoryCard({
           alt={`${item.styleLabel} history preview`}
           fill
           unoptimized
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover"
         />
         <div className="absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-background via-background/55 to-transparent" />

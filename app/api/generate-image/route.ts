@@ -13,7 +13,12 @@ import { openaiProvider } from "@/lib/openai";
 import { ACCEPTED_SOURCE_IMAGE_MIME_TYPES } from "@/lib/constants";
 import { getStylePreset } from "@/lib/style-presets";
 
-import { APICallError, generateImage, NoImageGeneratedError } from "ai";
+import {
+  APICallError,
+  generateImage,
+  generateText,
+  NoImageGeneratedError,
+} from "ai";
 import { uploadBufferToImageKit } from "@/lib/imagekit";
 
 export const runtime = "nodejs";
@@ -145,58 +150,56 @@ export async function POST(request: Request) {
   ].join("\n\n");
 
   try {
-    // generateImage =>
+    // 1. Use a vision model to describe the image and the desired style
+    const { text: enhancedPrompt } = await Sentry.startSpan(
+      { name: "describe image", op: "ai.task" },
+      async () => {
+        const { text } = await generateText({
+          model: openaiProvider!("gpt-4o-mini"),
+          messages: [
+            {
+              role: "user",
+              content: [
+                {
+                  type: "text",
+                  text: `Analyze this image and describe it in detail. Then, rewrite the description as a prompt to transform it into this style: "${preset.label}". 
+                  
+                  Style instructions: ${preset.prompt}
+                  
+                  Keep the composition, subject, and core details the same, but describe them with the new artistic style. 
+                  Return ONLY the final prompt for the image generator.`,
+                },
+                {
+                  type: "image",
+                  image: imageBuffer,
+                  mimeType: sourceMimeType,
+                },
+              ],
+            },
+          ],
+        });
+        return { text };
+      },
+    );
 
+    console.log("Enhanced Prompt:", enhancedPrompt);
+
+    // 2. Generate the final image using DALL-E 3 with the enhanced prompt
     const result = await Sentry.startSpan(
       {
-        name: `image edit ${model}`,
+        name: `image generation dall-e-3`,
         op: "gen_ai.request",
         attributes: {
-          "gen_ai.request.model": model,
+          "gen_ai.request.model": "dall-e-3",
           "gen_ai.operation.name": "request",
-          "gen_ai.request.messages": JSON.stringify([
-            { role: "user", content: prompt },
-            { role: "user", content: "[source image attachment omitted]" },
-          ]),
         },
       },
       async (span) => {
         const out = await generateImage({
-          model: openaiProvider!.imageModel(model),
-          prompt: {
-            images: [imageBuffer],
-            text: prompt,
-          },
+          model: openaiProvider!.imageModel("dall-e-3"),
+          prompt: enhancedPrompt,
           size: imageSize,
-          providerOptions: {
-            openai: {
-              input_fidelity: "high", // this means that the input image is used as a reference for the generation,
-              quality: "medium", // this means that the output image is of medium quality
-              output_format: "png",
-              user: userId,
-            },
-          },
         });
-
-        const u = out.usage;
-
-        if (u.inputTokens != null) {
-          span.setAttribute("gen_ai.usage.input_tokens", u.inputTokens);
-        }
-
-        if (u.outputTokens != null) {
-          span.setAttribute("gen_ai.usage.output_tokens", u.outputTokens);
-        }
-        if (u.totalTokens != null) {
-          span.setAttribute("gen_ai.usage.total_tokens", u.totalTokens);
-        }
-
-        span.setAttribute(
-          "gen_ai.response.text",
-          JSON.stringify([
-            "[image/png generated; pixel data not sent to Sentry]",
-          ]),
-        );
 
         return out;
       },
@@ -240,7 +243,13 @@ export async function POST(request: Request) {
       savedGeneration,
     });
   } catch (error) {
-    console.error("generate-image route failed", error);
+    console.error("CRITICAL: generate-image route failed!");
+    console.error(error);
+
+    if (error instanceof Error) {
+      console.error("Error Message:", error.message);
+      console.error("Error Stack:", error.stack);
+    }
 
     if (APICallError.isInstance(error)) {
       return NextResponse.json(

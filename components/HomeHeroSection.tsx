@@ -26,14 +26,14 @@ export function HomeHeroSection() {
         <nav className="hero-pill home-nav">
           <Link href="/" className="home-brand">
             <span className="relative mr-2 flex h-10 w-10 shrink-0 items-center justify-center overflow-visible">
-              <Image
-                src="/logo.png"
-                alt="Luma Studio"
-                width={72}
-                height={72}
-                className="h-10 w-10 max-h-none max-w-none origin-left scale-[1.55] object-cover"
-                priority
-              />
+                <Image
+                  src="/logo.png"
+                  alt="Luma Studio"
+                  width={72}
+                  height={72}
+                  className="h-10 w-auto max-h-none max-w-none origin-left scale-[1.55] object-cover"
+                  priority
+                />
             </span>
             <div className="min-w-0">
               <span className="caps-2xs block text-sm font-semibold text-foreground">

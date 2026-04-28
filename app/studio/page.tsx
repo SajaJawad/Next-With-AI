@@ -35,7 +35,7 @@ async function StudioPage() {
                 alt="Luma Studio"
                 width={72}
                 height={72}
-                className="mt-2 mr-2 max-h-none max-w-none origin-left scale-[1.55] object-cover"
+                className="h-10 w-auto max-h-none max-w-none origin-left scale-[1.55] object-cover"
                 priority
               />
             </span>

@@ -37,6 +37,7 @@ export function StudioPreviewPanel() {
                   alt="Uploaded source preview"
                   fill
                   unoptimized
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
                 />
               ) : (
@@ -44,6 +45,7 @@ export function StudioPreviewPanel() {
                   src="/original.png"
                   alt="Original example preview"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
                 />
               )}
