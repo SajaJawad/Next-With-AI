@@ -193,7 +193,7 @@ export async function POST(request: Request) {
           "gen_ai.operation.name": "request",
         },
       },
-      async (span) => {
+      async () => {
         const out = await generateImage({
           model: openaiProvider!.imageModel("dall-e-3"),
           prompt: enhancedPrompt,
